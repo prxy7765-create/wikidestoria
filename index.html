@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DestoriaRP — Wiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0c11; --surface:#17141c; --surface2:#1e1a24; --line:#2c2733;
+  --ink:#ece7e2; --muted:#a79fb0; --crimson:#b6294a; --crimson-soft:#7d1d36;
+  --gold:#c9a227; --font-display:'Fraunces',serif; --font-body:'Work Sans',sans-serif;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  box-sizing:border-box;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f3efe8; --surface:#ffffff; --surface2:#f7f3ec; --line:#e2dbcb;
+    --ink:#211a1f; --muted:#6b6070; --crimson:#8f1d38; --crimson-soft:#c9a9b2; --gold:#8a6d15;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e0c11; --surface:#17141c; --surface2:#1e1a24; --line:#2c2733;
+  --ink:#ece7e2; --muted:#a79fb0; --crimson:#b6294a; --crimson-soft:#7d1d36; --gold:#c9a227;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth; scroll-padding-top:calc(84px + env(safe-area-inset-top,0px));}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-body); line-height:1.55; -webkit-font-smoothing:antialiased;}
+a{color:inherit;}
+h1,h2,h3,h4{font-family:var(--font-display); font-weight:600; letter-spacing:.2px; margin:0 0 .5em;}
+p{margin:0 0 1em; color:var(--ink);}
+.muted{color:var(--muted);}
+
+/* discord banner */
+.discord-banner{
+  background:linear-gradient(90deg,var(--crimson-soft),var(--crimson));
+  color:#fff; text-align:center; padding:10px 16px; font-size:.9rem; font-weight:600;
+  padding-top:calc(10px + env(safe-area-inset-top,0px));
+}
+.discord-banner a{color:#fff; text-decoration:underline; text-underline-offset:2px;}
+
+.topbar{
+  position:sticky; top:0; z-index:30; display:none; align-items:center; justify-content:space-between;
+  background:var(--surface); border-bottom:1px solid var(--line); padding:14px 18px;
+}
+.topbar .brand{font-family:var(--font-display); font-size:1.1rem;}
+.topbar button{background:none; border:1px solid var(--line); color:var(--ink); border-radius:6px; padding:6px 12px; font-family:var(--font-body); font-size:.9rem;}
+
+.shell{display:grid; grid-template-columns:280px 1fr; max-width:1220px; margin:0 auto;}
+
+nav.sidebar{
+  border-right:1px solid var(--line); padding:32px 22px; position:sticky; top:0; align-self:start;
+  height:100vh; overflow-y:auto;
+}
+.sidebar .brand{font-family:var(--font-display); font-size:1.5rem; margin-bottom:2px;}
+.sidebar .brand span{color:var(--crimson);}
+.sidebar .tagline{font-size:.8rem; color:var(--muted); margin-bottom:26px;}
+.sidebar .group{margin-bottom:20px;}
+.sidebar .group-title{font-size:.72rem; color:var(--gold); margin-bottom:8px; font-weight:600;}
+.sidebar a{display:block; font-size:.88rem; padding:4px 0; color:var(--muted); text-decoration:none; border-left:2px solid transparent; padding-left:10px; margin-left:-10px;}
+.sidebar a.sub{font-size:.82rem; padding-left:20px; margin-left:-10px;}
+.sidebar a:hover{color:var(--ink); border-left-color:var(--crimson);}
+
+main{padding:0 0 80px;}
+.hero{
+  padding:56px 48px 40px; border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg, var(--surface2), var(--bg));
+}
+.hero .eyebrow{font-size:.78rem; color:var(--crimson); margin-bottom:10px;}
+.hero h1{font-size:2.5rem; max-width:14ch;}
+.hero p.lead{max-width:52ch; color:var(--muted); font-size:1.02rem;}
+.hero .cta{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap;}
+.btn{display:inline-block; padding:11px 20px; border-radius:6px; font-size:.92rem; font-weight:600; text-decoration:none;}
+.btn-primary{background:var(--crimson); color:#fff;}
+.btn-ghost{border:1px solid var(--line); color:var(--ink);}
+
+section.page{padding:44px 48px; border-bottom:1px solid var(--line);}
+section.page h2{font-size:1.5rem; display:flex; align-items:baseline; gap:10px;}
+section.page h2 .num{color:var(--crimson); font-family:var(--font-body); font-size:.85rem; font-weight:700;}
+section.page > .intro{color:var(--muted); max-width:62ch; margin-bottom:20px;}
+section.sub{padding:30px 48px 30px 68px; border-bottom:1px solid var(--line); background:var(--surface2);}
+section.sub h3{font-size:1.18rem;}
+
+.card{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:18px 20px; margin-bottom:12px;}
+.card h4{font-size:1rem; margin-bottom:6px;}
+.card p:last-child{margin-bottom:0;}
+
+ol.articles{list-style:none; margin:0; padding:0; counter-reset:art;}
+ol.articles li{counter-increment:art; position:relative; padding:9px 0 9px 34px; border-bottom:1px solid var(--line); font-size:.94rem;}
+ol.articles li:last-child{border-bottom:none;}
+ol.articles li::before{content:"Art. " counter(art); position:absolute; left:0; top:9px; color:var(--crimson); font-size:.72rem; font-weight:700; letter-spacing:.3px;}
+
+table.wiki{width:100%; border-collapse:collapse; font-size:.88rem; background:var(--surface); border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+table.wiki th{background:var(--surface2); text-align:left; padding:10px 14px; color:var(--gold); font-weight:600; font-size:.78rem;}
+table.wiki td{padding:9px 14px; border-top:1px solid var(--line);}
+
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+.tag{display:inline-block; font-size:.72rem; padding:3px 9px; border-radius:999px; border:1px solid var(--line); color:var(--muted); margin-right:6px;}
+.tag.legal{color:#6fae7e; border-color:#2f4a37;}
+.tag.illegal{color:var(--crimson); border-color:var(--crimson-soft);}
+
+kbd{background:var(--surface2); border:1px solid var(--line); border-bottom-width:2px; border-radius:4px; padding:2px 7px; font-family:var(--font-body); font-size:.82rem;}
+
+footer{padding:36px 48px; color:var(--muted); font-size:.85rem;}
+
+@media (max-width: 860px){
+  .shell{grid-template-columns:1fr;}
+  nav.sidebar{display:none; position:static; height:auto;}
+  nav.sidebar.open{display:block;}
+  .topbar{display:flex;}
+  .hero{padding:38px 22px 28px;}
+  .hero h1{font-size:2rem;}
+  section.page{padding:32px 22px;}
+  section.sub{padding:26px 22px;}
+  .grid2{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="discord-banner">
+  Rejoignez DestoriaRP sur Discord : <a href="https://discord.gg/destoriarp" target="_blank" rel="noopener">discord.gg/destoriarp</a>
+</div>
+
+<div class="topbar">
+  <div class="brand">Destoria<span style="color:var(--crimson)">RP</span> — Wiki</div>
+  <button id="navToggle">Sommaire ☰</button>
+</div>
+
+<div class="shell">
+  <nav class="sidebar" id="sidebar">
+    <div class="brand">Destoria<span>RP</span></div>
+    <div class="tagline">Chroniques du serveur</div>
+
+    <div class="group">
+      <div class="group-title">DÉCOUVRIR</div>
+      <a href="#accueil">Accueil</a>
+    </div>
+
+    <div class="group">
+      <div class="group-title">RÈGLEMENT DESTORIA RP</div>
+      <a href="#reglement">Règlement</a>
+      <a class="sub" href="#reglement-general">Règlement général</a>
+      <a class="sub" href="#reglement-discord">Règlement Discord</a>
+      <a class="sub" href="#reglement-streaming">Règlement streaming</a>
+      <a class="sub" href="#information-rp">Information RP</a>
+      <a class="sub" href="#coma">Coma</a>
+      <a class="sub" href="#mort-rp">Mort RP</a>
+    </div>
+
+    <div class="group">
+      <div class="group-title">LÉGAL &amp; ILLÉGAL</div>
+      <a href="#legal-illegal">Légal &amp; illégal</a>
+      <a class="sub" href="#reglement-illegal">Règlement illégal</a>
+      <a class="sub" href="#notes-gangs">Notes des organisations/gangs</a>
+      <a class="sub" href="#patron-gang">Devenir patron d'un gang</a>
+      <a class="sub" href="#activites-illegales">Règlement des activités illégales</a>
+      <a class="sub" href="#descente">Règlement descente</a>
+      <a class="sub" href="#reglement-legal">Règlement légal</a>
+      <a class="sub" href="#notes-entreprises">Notes des entreprises</a>
+      <a class="sub" href="#patron-entreprise">Devenir patron d'une entreprise</a>
+      <a class="sub" href="#forces-ordre">Rôles des forces de l'ordre</a>
+      <a class="sub" href="#reglement-fdo">Règlement FDO &amp; EMS</a>
+    </div>
+
+    <div class="group">
+      <div class="group-title">SANCTIONS</div>
+      <a href="#sanctions">Barème des sanctions</a>
+    </div>
+
+    <div class="group">
+      <div class="group-title">AIDE &amp; INFOS</div>
+      <a href="#connexion">Connexion au serveur</a>
+      <a href="#boutique">Boutique</a>
+      <a href="#bugs">Bugs</a>
+      <a href="#discord">Discord</a>
+    </div>
+
+    <div class="group">
+      <div class="group-title">EN JEU</div>
+      <a href="#menus">Les menus (F1–F9)</a>
+      <a href="#modes">Modes de jeux</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" id="accueil">
+      <div class="eyebrow">WIKI OFFICIEL</div>
+      <h1>Bienvenue dans les chroniques de Destoria</h1>
+      <p class="lead">Tout ce qu'il faut savoir avant de poser le pied dans la ville : règlement, fonctionnement du serveur, boutique et bases du jeu.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://discord.gg/destoriarp" target="_blank" rel="noopener">Rejoindre le Discord</a>
+        <a class="btn btn-ghost" href="#reglement">Lire le règlement</a>
+      </div>
+    </section>
+
+    <!-- REGLEMENT -->
+    <section class="page" id="reglement">
+      <h2><span class="num">01</span> Règlement</h2>
+      <p class="intro">Le règlement de DestoriaRP s'articule en plusieurs volets : les règles générales valables partout, les règles propres au Discord et au stream, et les informations sur le déroulement du RP (coma, mort RP).</p>
+    </section>
+
+    <section class="sub" id="reglement-general">
+      <h3>Règlement général</h3>
+      <ol class="articles">
+        <li>Le roleplay prime en toute circonstance dès la connexion au serveur : on incarne son personnage, on ne sort du rôle que pour une urgence réelle (bug, déconnexion, litige).</li>
+        <li>Le metagaming est interdit : utiliser une information obtenue hors RP (Discord, stream, vocal externe, écran d'un autre joueur) dans une scène RP entraîne une sanction.</li>
+        <li>Le powergaming est interdit : imposer une action à un autre joueur sans lui laisser de marge de réaction ("je te menotte" sans réaction possible) n'est pas autorisé.</li>
+        <li>Le Fail RP est proscrit : agir de façon totalement incohérente avec la situation (foncer sur une descente armée en étant seul et sans arme, par exemple) casse l'immersion collective.</li>
+        <li>La règle du Value your life s'applique : un personnage a conscience du danger et agit en conséquence face à une arme ou une situation de vie ou de mort.</li>
+        <li>Un seul compte par joueur est autorisé, sauf dérogation expresse du staff pour un second personnage.</li>
+        <li>Tout comportement discriminatoire, propos haineux ou RP à caractère sexuel est strictement interdit, en jeu comme sur les vocaux.</li>
+        <li>Les zones désignées comme "safe" (hôpitaux, certains points de spawn) sont hors combat et hors interaction hostile.</li>
+        <li>La New Life Rule s'applique après un retour à l'hôpital : le personnage perd le souvenir des circonstances de sa mort ou de son évanouissement.</li>
+        <li>Toute plainte ou litige RP se règle via un ticket sur le Discord ; les appels directs en vocal sans ticket ne sont pas traités en priorité.</li>
+        <li>L'utilisation de logiciels tiers, macros ou exploits de bugs est interdite et entraîne un bannissement immédiat.</li>
+        <li>Le staff peut geler une scène RP pour rappeler une règle ; les joueurs doivent s'y conformer sans contestation en direct.</li>
+      </ol>
+    </section>
+
+    <section class="sub" id="reglement-discord">
+      <h3>Règlement Discord</h3>
+      <ol class="articles">
+        <li>Le respect entre membres est obligatoire : aucune provocation, insulte ou propos discriminatoire n'est toléré, y compris en message privé signalé.</li>
+        <li>Le pseudo et l'avatar doivent rester lisibles, sans contenu choquant ni usurpation d'un membre du staff.</li>
+        <li>Chaque salon a un sujet précis ; les messages hors-sujet sont déplacés ou supprimés sans préavis.</li>
+        <li>Le spam, les mentions abusives (@everyone, @here) par un non-staff et les liens publicitaires sont interdits.</li>
+        <li>L'auto-promotion d'un autre serveur ou d'une chaîne n'est autorisée que dans les salons prévus à cet effet.</li>
+        <li>Toute demande d'aide, de remboursement ou de signalement passe par un ticket ; un seul ticket ouvert à la fois par sujet.</li>
+        <li>Usurper l'identité d'un membre du staff ou se faire passer pour un représentant du serveur est passible d'un bannissement Discord définitif.</li>
+      </ol>
+    </section>
+
+    <section class="sub" id="reglement-streaming">
+      <h3>Règlement streaming</h3>
+      <ol class="articles">
+        <li>Diffuser en direct est autorisé, mais le stream ne doit jamais servir de source de metagaming pour soi-même ou pour des tiers.</li>
+        <li>Un délai de sécurité (delay) d'au moins 3 minutes est recommandé pour éviter que des informations RP ne fuitent en temps réel.</li>
+        <li>Le tchat du stream ne doit pas être utilisé pour transmettre des informations RP à son propre personnage pendant une scène en cours.</li>
+        <li>Diffuser dans le but de nuire à un autre joueur (traque, harcèlement) est strictement interdit.</li>
+        <li>Le contenu diffusé doit respecter les mêmes règles de décence que le serveur (pas de propos haineux, pas de contenu explicite).</li>
+      </ol>
+    </section>
+
+    <section class="sub" id="information-rp">
+      <h3>Information RP</h3>
+      <p class="muted" style="margin-bottom:14px;">Ce qu'il faut savoir sur l'état de son personnage lors de moments critiques.</p>
+    </section>
+
+    <section class="sub" id="coma">
+      <h3>Coma</h3>
+      <ol class="articles">
+        <li>Un personnage tombé au combat entre en état de coma : il reste au sol, incapable d'agir, jusqu'à une prise en charge par les secours ou un compte à rebours.</li>
+        <li>Pendant le coma, toute interaction avec le personnage doit rester cohérente : on ne le fouille pas librement sans justification RP.</li>
+        <li>Si les secours n'interviennent pas dans le délai imparti, le coma évolue automatiquement vers la mort RP.</li>
+        <li>Un joueur en coma ne doit pas communiquer d'informations hors RP sur sa situation tant que la scène n'est pas terminée.</li>
+      </ol>
+    </section>
+
+    <section class="sub" id="mort-rp">
+      <h3>Mort RP</h3>
+      <ol class="articles">
+        <li>La mort RP (CK) met fin définitivement à un personnage ; elle ne peut être décidée que dans les cas prévus (échec de réanimation, exécution RP encadrée).</li>
+        <li>Une exécution RP doit respecter un délai de sommation et une justification cohérente avec la scène en cours.</li>
+        <li>Après une mort RP, le joueur crée un nouveau personnage ; il ne peut pas faire référence aux souvenirs ou relations de l'ancien.</li>
+        <li>Le staff peut être sollicité pour valider une mort RP contestée avant qu'elle ne soit actée.</li>
+      </ol>
+    </section>
+
+    <!-- LEGAL & ILLEGAL -->
+    <section class="page" id="legal-illegal">
+      <h2><span class="num">02</span> Légal &amp; illégal</h2>
+      <p class="intro">Le monde de Destoria repose sur un équilibre entre les activités légales (entreprises, forces de l'ordre) et le monde interlope (gangs, organisations criminelles).</p>
+    </section>
+
+    <section class="sub" id="reglement-illegal">
+      <h3>Règlement illégal <span class="tag illegal">illégal</span></h3>
+      <ol class="articles">
+        <li>Toute activité illégale doit être justifiée en RP et menée avec un minimum de préparation (repérage, plan, rôles définis).</li>
+        <li>Le nombre de participants à un braquage ou une prise d'otage est plafonné selon le type d'établissement, pour garantir un équilibre avec les forces de l'ordre.</li>
+        <li>La prise d'otage est encadrée : durée maximale, nombre d'otages limité, et vie de l'otage respectée en toutes circonstances.</li>
+        <li>Le door-kick (forcer une porte) sans justification RP claire n'est pas autorisé.</li>
+      </ol>
+    </section>
+
+    <section class="sub" id="notes-gangs">
+      <h3>Notes des organisations/gangs</h3>
+      <ol class="articles">
+        <li>Chaque gang dispose d'une fiche enregistrée auprès du staff, avec son nom, sa zone d'influence et ses effectifs déclarés.</li>
+        <li>Un territoire contrôlé doit correspondre à une présence RP active et régulière, pas seulement à un marquage sur la carte.</li>
+        <li>Le recrutement se fait exclusivement en RP ; forcer un joueur à rejoindre une organisation contre son gré est interdit.</li>
+        <li>Les conflits entre organisations doivent rester proportionnés et ne pas dégénérer en harcèlement hors RP.</li>
+      </ol>
+    </section>
+
+    <section class="sub" id="patron-gang">
+      <h3>Devenir patron d'un gang</h3>
+      <ol class="articles">
+        <li>Un dossier de présentation (concept, nom, histoire RP, structure hiérarchique) est déposé par ticket auprès du staff.</li>
+        <li>Le staff évalue la cohérence RP du projet et son impact potentiel sur l'équilibre du serveur avant validation.</li>
+        <li>Un gang inactif pendant plusieurs semaines peut voir son statut retiré et sa zone réattribuée.</li>
+        <li>Le patron est responsable du comportement de ses membres dans le cadre des activités du gang.</li>
+      </ol>
+    </section>
+
+    <section class="sub" id="activites-illegales">
+      <h3>Règlement des activités illégales</h3>
+      <ol class="articles">
+        <li>La production et la vente de substances illicites doivent rester discrètes et cohérentes avec le RP (pas de vente en pleine rue sans mise en scène).</li>
+        <li>Le vol de véhicule doit inclure une phase de repérage et de crochetage RP, sans raccourci injustifié.</li>
+        <li>Le trafic d'armes est autorisé mais soumis à un plafond de quantité par transaction, pour éviter la sur-militarisation d'un gang.</li>
+        <li>Toute activité illégale surprise par les forces de l'ordre doit donner lieu à une véritable interaction RP (fuite, négociation, affrontement), et non à une déconnexion abusive.</li>
+      </ol>
+    </section>
+
+    <section class="sub" id="descente">
+      <h3>Règlement descente</h3>
+      <ol class="articles">
+        <li>Une descente (perquisition, intervention armée) doit être annoncée aux forces de l'ordre via les canaux RP prévus, avec un mandat ou une justification claire.</li>
+        <li>Le nombre d'agents engagés est proportionné à la menace annoncée ; une escalade disproportionnée peut être recadrée par le staff.</li>
+        <li>Un temps de réaction minimal est laissé aux occupants du lieu avant toute entrée en force.</li>
+        <li>Toute prise de bien ou arrestation à l'issue d'une descente doit être justifiée par les preuves RP recueillies sur place.</li>
+      </ol>
+    </section>
+
+    <section class="sub" id="reglement-legal">
+      <h3>Règlement légal <span class="tag legal">légal</span></h3>
+      <ol class="articles">
+        <li>Toute entreprise doit exercer une activité réelle et visible en jeu, cohérente avec sa fiche de présentation.</li>
+        <li>La concurrence entre entreprises légales est encouragée tant qu'elle reste RP et respectueuse.</li>
+        <li>Un employé d'entreprise légale doit être déclaré auprès de son patron et respecter les horaires d'ouverture affichés.</li>
+      </ol>
+    </section>
+
+    <section class="sub" id="notes-entreprises">
+      <h3>Notes des entreprises</h3>
+      <ol class="articles">
+        <li>Chaque entreprise dispose d'une fiche enregistrée précisant son secteur, son local et son patron responsable.</li>
+        <li>Une entreprise inactive plusieurs semaines peut être reprise par le staff et remise en jeu pour un autre projet.</li>
+        <li>Les prix pratiqués en RP doivent rester dans une fourchette cohérente avec l'économie du serveur.</li>
+      </ol>
+    </section>
+
+    <section class="sub" id="patron-entreprise">
+      <h3>Devenir patron d'une entreprise</h3>
+      <ol class="articles">
+        <li>Un dossier de présentation (concept, secteur, local souhaité) est déposé par ticket auprès du staff.</li>
+        <li>Le staff valide la cohérence du projet avec l'univers de Destoria avant l'attribution officielle du local.</li>
+        <li>Le patron s'engage à maintenir une activité RP régulière sous peine de retrait du statut.</li>
+      </ol>
+    </section>
+
+    <section class="sub" id="forces-ordre">
+      <h3>Rôles des forces de l'ordre</h3>
+      <ol class="articles">
+        <li>La police et la gendarmerie assurent le maintien de l'ordre public et la réponse aux infractions constatées en jeu.</li>
+        <li>Les services EMS (secours médicaux) priment sur toute autre intervention en cas d'urgence vitale.</li>
+        <li>Chaque grade au sein des forces de l'ordre correspond à des responsabilités et des habilitations RP précises (enquête, intervention armée, formation).</li>
+      </ol>
+    </section>
+
+    <section class="sub" id="reglement-fdo">
+      <h3>Règlement des forces de l'ordre et EMS</h3>
+      <ol class="articles">
+        <li>L'impartialité est de rigueur : aucun traitement de faveur envers son propre gang ou ses amis hors-RP n'est toléré.</li>
+        <li>Toute interpellation doit rester justifiée en RP et proportionnée à l'infraction constatée.</li>
+        <li>L'usage de l'arme à feu suit une règle de sommation avant tir, sauf mise en danger immédiate d'un agent ou d'un civil.</li>
+        <li>Les effectifs EMS ne portent pas d'arme létale et se concentrent sur la prise en charge médicale des blessés.</li>
+        <li>Un rapport d'intervention est tenu pour toute arrestation ou usage de la force significatif.</li>
+      </ol>
+    </section>
+
+    <!-- SANCTIONS -->
+    <section class="page" id="sanctions">
+      <h2><span class="num">03</span> Barème des sanctions</h2>
+      <p class="intro">Les sanctions sont graduées et laissées à l'appréciation du staff selon la gravité, le contexte et l'historique du joueur.</p>
+      <table class="wiki">
+        <thead><tr><th>Infraction</th><th>1ère fois</th><th>Récidive</th></tr></thead>
+        <tbody>
+          <tr><td>Metagaming / Powergaming léger</td><td>Avertissement</td><td>Kick ou mise en jail RP</td></tr>
+          <tr><td>Fail RP</td><td>Avertissement + rappel des règles</td><td>Mise en jail RP</td></tr>
+          <tr><td>Non-respect du Value your life</td><td>Avertissement</td><td>Ban temporaire (24–72h)</td></tr>
+          <tr><td>Propos discriminatoires / haineux</td><td>Ban temporaire</td><td>Ban définitif</td></tr>
+          <tr><td>Triche, macro ou exploitation de bug</td><td>Ban définitif</td><td>—</td></tr>
+          <tr><td>RP à caractère sexuel</td><td>Ban définitif</td><td>—</td></tr>
+          <tr><td>Prise d'otage hors cadre</td><td>Avertissement + annulation de la scène</td><td>Ban temporaire</td></tr>
+          <tr><td>Abus de pouvoir (staff / FDO)</td><td>Retrait temporaire des accès</td><td>Retrait définitif</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- AIDE & INFOS -->
+    <section class="page" id="connexion">
+      <h2><span class="num">04</span> Connexion au serveur</h2>
+      <p class="intro">Étapes pour rejoindre Destoria pour la première fois.</p>
+      <div class="grid2">
+        <div class="card"><h4>1. Whitelist</h4><p>Un court questionnaire RP est à compléter sur le Discord pour obtenir l'accès.</p></div>
+        <div class="card"><h4>2. Client de jeu</h4><p>Le launcher FiveM à jour est nécessaire, avec les identifiants Rockstar liés.</p></div>
+        <div class="card"><h4>3. Connexion</h4><p>Le serveur se rejoint depuis la liste FiveM ou via le lien direct partagé sur le Discord.</p></div>
+        <div class="card"><h4>4. Création du personnage</h4><p>Nom, apparence et petite fiche RP sont à renseigner à la première connexion.</p></div>
+      </div>
+    </section>
+
+    <section class="page" id="boutique">
+      <h2><span class="num">05</span> Boutique</h2>
+      <p class="intro">La monnaie premium de Destoria permet d'accéder à des VIP, véhicules et extras cosmétiques.</p>
+      <ul class="rule-list" style="list-style:none; margin:0; padding:0;">
+        <li style="padding:10px 0; border-bottom:1px solid var(--line);"><strong>Achats</strong> — cartes bancaires et principaux moyens de paiement en ligne acceptés.</li>
+        <li style="padding:10px 0; border-bottom:1px solid var(--line);"><strong>Historique d'achat</strong> — consultable à tout moment depuis l'espace boutique lié au Discord.</li>
+        <li style="padding:10px 0; border-bottom:1px solid var(--line);"><strong>Remboursement</strong> — en cas de VIP, Dynacoin-équivalent ou extra non reçu, un ticket dédié permet un traitement sous quelques jours.</li>
+        <li style="padding:10px 0;"><strong>Résiliation VIP</strong> — possible à tout moment depuis le même espace, sans reconduction forcée.</li>
+      </ul>
+    </section>
+
+    <section class="page" id="bugs">
+      <h2><span class="num">06</span> Bugs</h2>
+      <p class="intro">Avant d'ouvrir un ticket, quelques vérifications rapides évitent souvent le problème.</p>
+      <table class="wiki">
+        <thead><tr><th>Symptôme</th><th>Solution</th></tr></thead>
+        <tbody>
+          <tr><td>La carte ne charge pas / textures manquantes</td><td>Vider le cache FiveM puis relancer le launcher</td></tr>
+          <tr><td>Inventaire figé</td><td>Se déconnecter/reconnecter, puis signaler si le problème persiste</td></tr>
+          <tr><td>Personnage invisible pour les autres</td><td>Redémarrer le client de jeu avant reconnexion</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="page" id="discord">
+      <h2><span class="num">07</span> Discord</h2>
+      <p class="intro">Le Discord centralise l'entraide, les annonces et le support de Destoria.</p>
+      <a class="btn btn-primary" href="https://discord.gg/destoriarp" target="_blank" rel="noopener">discord.gg/destoriarp</a>
+    </section>
+
+    <!-- EN JEU -->
+    <section class="page" id="menus">
+      <h2><span class="num">08</span> Les menus (F1–F9)</h2>
+      <p class="intro">Les raccourcis clavier donnent accès aux principaux menus du jeu.</p>
+      <table class="wiki">
+        <thead><tr><th>Touche</th><th>Menu</th><th>Contenu</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>F1</kbd></td><td>Statistiques</td><td>Niveau, argent, état du personnage</td></tr>
+          <tr><td><kbd>F3</kbd></td><td>Animations</td><td>Emotes et scènes RP</td></tr>
+          <tr><td><kbd>F4</kbd></td><td>Téléphone</td><td>Contacts, messages, applications</td></tr>
+          <tr><td><kbd>F5</kbd></td><td>Inventaire</td><td>Objets, portefeuille, armes, vêtements</td></tr>
+          <tr><td><kbd>F6</kbd></td><td>Métiers</td><td>Emplois et missions disponibles</td></tr>
+          <tr><td><kbd>F9</kbd></td><td>Paramètres</td><td>Options graphiques et audio</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="page" id="modes" style="border-bottom:none;">
+      <h2><span class="num">09</span> Modes de jeux</h2>
+      <p class="intro">En dehors du RP libre, Destoria propose des activités annexes.</p>
+      <div class="grid2">
+        <div class="card"><h4>Territoire</h4><p>Contrôle de zones entre organisations, avec avantages RP à la clé.</p></div>
+        <div class="card"><h4>Arena</h4><p>Combats classés avec système de rangs et de saisons.</p></div>
+        <div class="card"><h4>Zone Gun Fight</h4><p>Affrontements libres dans une zone dédiée, hors conséquences RP.</p></div>
+        <div class="card"><h4>Mode AFK</h4><p>Mise en retrait temporaire du personnage sans quitter le serveur.</p></div>
+      </div>
+    </section>
+
+    <footer>
+      DestoriaRP — Wiki communautaire, structure inspirée de wiki.dynastyrp.fr. Contenu à adapter à vos propres règles et prix.
+    </footer>
+  </main>
+</div>
+
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('sidebar').classList.toggle('open');
+});
+document.querySelectorAll('.sidebar a').forEach(function(a){
+  a.addEventListener('click', function(){ document.getElementById('sidebar').classList.remove('open'); });
+});
+</script>
+</body>
+</html>
